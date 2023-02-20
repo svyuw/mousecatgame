@@ -1,9 +1,32 @@
 {
-  "name": "mousecatgame",
+  "name": "npm",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    
-  }
+    "start": "web-dev-server --node-resolve --open --watch",
+    "build": "rollup --config",
+    "deploy": "npm run build && gh-pages -d dist"
+  },
+  "dependencies": {
+    "p5": "^1.5.0",
+    "p5.play": "^3.5.20"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@web/dev-server": "^0.1.35",
+    "gh-pages": "^5.0.0",
+    "rollup": "^2.79.1",
+    "rollup-plugin-copy": "^3.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/svyuw/mousecatgame.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/svyuw/mousecatgame/issues"
+  },
+  "homepage": "https://github.com/svyuw/mousecatgame#readme",
+  "description": ""
 }
