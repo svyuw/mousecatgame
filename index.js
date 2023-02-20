@@ -3,6 +3,7 @@ let catLoad;
 let mice = [];
 let mouseLoad;
 let score = 0;
+let scoreBoardText = document.querySelector(".score-text");
 
 function preload() {
     catLoad = loadImage('cat.gif');
@@ -21,11 +22,10 @@ function setup () {
       y: random(height),
       size: 60,
       vx: random(-2, 2),
-      vy: random(-2, 2)
+      vy: random(-2, 2),
     };
     mice.push(mouse);
   }
-
 }
 
 function draw () {
@@ -33,20 +33,36 @@ function draw () {
     background(193, 225, 193);
     
     for (let i = 0; i < mice.length; i++) {
-      
-        mice[i].vx += random(-0.1, 0.1);
-        mice[i].vy += random(-0.1, 0.1);
+        let curMouse = mice[i];
+        let isCatColliding = collideCircleCircle(curMouse.x, curMouse.y, curMouse.size, 
+                                                cat.position.x, cat.position.y, 200);
+            
+        if (isCatColliding) {
+            score += 1;
+            scoreBoardText.innerHTML = `Score: ${score}`;
+            mice[i] = {};
+        }
+        curMouse.vx += random(-0.1, 0.1);
+        curMouse.vy += random(-0.1, 0.1);
     
-        let speed = sqrt(mice[i].vx * mice[i].vx + mice[i].vy * mice[i].vy);
+        let speed = sqrt(curMouse.vx * curMouse.vx + curMouse.vy * curMouse.vy);
         if (speed > 5) {
-          mice[i].vx *= 5 / speed;
-          mice[i].vy *= 5 / speed;
+          curMouse.vx *= 5 / speed;
+          curMouse.vy *= 5 / speed;
         }
 
-        mice[i].x += mice[i].vx;
-        mice[i].y += mice[i].vy;
-   
-        image(mouseLoad, mice[i].x, mice[i].y, mice[i].size, mice[i].size);
+        curMouse.x += curMouse.vx;
+        curMouse.y += curMouse.vy;
+
+        if (curMouse.x >= windowWidth || curMouse.x <= 0) {
+            curMouse.vx = curMouse.vx * -1;
+        }
+
+        if (curMouse.y >= windowWidth || curMouse.y <= 0) {
+            curMouse.vy = curMouse.vy * -1;
+        }
+
+        image(mouseLoad, curMouse.x, curMouse.y, curMouse.size, curMouse.size);
       }
 
       drawSprites();
