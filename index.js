@@ -1,3 +1,4 @@
+
 let cat;
 let catLoad;
 let mice = [];
